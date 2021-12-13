@@ -133,6 +133,37 @@ function getIconCard(obj) {
 	card.append(obj.name);
 	return card;
 }
+// funzione che genera un colore casuale in formato esadecimale
+function getRandColor() {
+	let randColor = "#"
+	let charDigit = "abcdef";
+	for (let i = 0; i < 6; i++) {
+		let colorDigit =  Math.floor(Math.random()* 16);
+		if (colorDigit > 9) {
+			colorDigit = charDigit[colorDigit - 10];
+		}
+		randColor += colorDigit;
+	}
+	return randColor;
+}
+// funzione che assegna la funzione getRandColor per categoria in modo da avere lo stesso colore randomico per lo stesso type
+function randColorForKey (objArray, typeKey, colorKey) {
+	const keyArray = valuesForKey(objArray, typeKey);
+	const colorArray = [];
+	for (let i = 1; i < keyArray.length; i++) {
+		colorArray.push(getRandColor());
+	}
+	for (i in objArray) {
+		let foundMatch;
+		for (let j = 1; j < keyArray.length; j++) {
+			if (objArray[i][typeKey] == keyArray[j]) {
+				foundMatch = j;
+			}
+		}
+		objArray[i][colorKey] = colorArray[foundMatch - 1]; 
+	}
+	return colorArray;
+}
 // genero un array per i vari tipi di icone con cui do il valore alle option delle select
 const typeArray = valuesForKey(faIcons, "type");
 // costruisco la struttura da appendere nell'header
@@ -149,6 +180,7 @@ for (i in typeArray) {
 		optionValue.addEventListener("click",
 			function () {
 				iconContainer.innerHTML = "";
+				randColorForKey (faIcons, "type", "color");
 				const foundIcons = faIcons.filter((element) => {return this.value == element.type});
 				for (let i in foundIcons) {
 					iconContainer.append(getIconCard(foundIcons[i]));

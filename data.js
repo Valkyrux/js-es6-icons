@@ -114,7 +114,7 @@ const faIcons = [
 ];
 // funzione che trova tutti i valori possibili per una determinata chiave all'interno di un array di oggetti
 function valuesForKey (objArray, key) {
-	const keyValueArray = [];
+	const keyValueArray = ["All"];
 	for (let i = 0; i < objArray.length; i++) {
 		if (!keyValueArray.includes(objArray[i][key])) {
 			keyValueArray.push(objArray[i][key]);
@@ -139,10 +139,32 @@ const typeArray = valuesForKey(faIcons, "type");
 const nav = document.createElement("nav");
 nav.append("Filtra per tipo");
 const selectType = document.createElement("select");
+// prendo la parte dell HTML che conterra le icone
+const iconContainer = document.querySelector(".icon-container");
 for (i in typeArray) {
 	const optionValue = document.createElement("option");
 	optionValue.value = typeArray[i];
 	optionValue.append(typeArray[i]);
+	if(optionValue.value != "All") {	
+		optionValue.addEventListener("click",
+			function () {
+				iconContainer.innerHTML = "";
+				const foundIcons = faIcons.filter((element) => {return this.value == element.type});
+				for (let i in foundIcons) {
+					iconContainer.append(getIconCard(foundIcons[i]));
+				}
+			}
+		);
+	} else {
+		optionValue.addEventListener("click", 
+			function () {
+				iconContainer.innerHTML = "";
+				for(let i in faIcons) {
+					iconContainer.append(getIconCard(faIcons[i]));
+				}
+			}
+		);
+	}
 	selectType.append(optionValue);
 }
 nav.append(selectType);
@@ -150,7 +172,7 @@ nav.append(selectType);
 const header = document.querySelector("header");
 header.append(nav);
 // prendo il container
-const iconContainer = document.querySelector(".icon-container");
+
 for (let i in faIcons) {
 	iconContainer.append(getIconCard(faIcons[i]));
 }

@@ -122,18 +122,35 @@ function valuesForKey (objArray, key) {
 	}
 	return keyValueArray;
 }
+// funzione che genera la struttura della card dato l'oggetto che contiene le icone
+function getIconCard(obj) {
+	const card = document.createElement("div");
+	card.classList.add("icon-card");
+	const faIcon = document.createElement("i");
+	faIcon.classList.add(obj.family, obj.prefix + obj.name);
+	faIcon.style.color = obj.color;
+	card.append(faIcon);
+	card.append(obj.name);
+	return card;
+}
+
 // genero un array per i vari tipi di icone con cui do il valore alle option delle select
 const typeArray = valuesForKey(faIcons, "type");
 // costruisco la struttura da appendere nell'header
 const nav = document.createElement("nav");
-nav.append = "Filtra per tipo";
+nav.append("Filtra per tipo");
 const selectType = document.createElement("select");
-for (type in typeArray) {
+for (i in typeArray) {
 	const optionValue = document.createElement("option");
-	optionValue.value = type;
+	optionValue.value = typeArray[i];
+	optionValue.append(typeArray[i]);
 	selectType.append(optionValue);
 }
 nav.append(selectType);
 // prendo l'header dall'htmpl
 const header = document.querySelector("header");
 header.append(nav);
+
+for (let i in faIcons) {
+	header.append(getIconCard(faIcons[i]));
+}

@@ -1,4 +1,4 @@
-[
+const faIcons = [
 	{
 		name: 'cat',
 		prefix: 'fa-',
@@ -112,3 +112,28 @@
 		color: 'blue'
 	}
 ];
+// funzione che trova tutti i valori possibili per una determinata chiave all'interno di un array di oggetti
+function valuesForKey (objArray, key) {
+	const keyValueArray = [];
+	for (let i = 0; i < objArray.length; i++) {
+		if (!keyValueArray.includes(objArray[i][key])) {
+			keyValueArray.push(objArray[i][key]);
+		}
+	}
+	return keyValueArray;
+}
+// genero un array per i vari tipi di icone con cui do il valore alle option delle select
+const typeArray = valuesForKey(faIcons, "type");
+// costruisco la struttura da appendere nell'header
+const nav = document.createElement("nav");
+nav.append = "Filtra per tipo";
+const selectType = document.createElement("select");
+for (type in typeArray) {
+	const optionValue = document.createElement("option");
+	optionValue.value = type;
+	selectType.append(optionValue);
+}
+nav.append(selectType);
+// prendo l'header dall'htmpl
+const header = document.querySelector("header");
+header.append(nav);

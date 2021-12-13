@@ -133,7 +133,6 @@ function getIconCard(obj) {
 	card.append(obj.name);
 	return card;
 }
-
 // genero un array per i vari tipi di icone con cui do il valore alle option delle select
 const typeArray = valuesForKey(faIcons, "type");
 // costruisco la struttura da appendere nell'header
@@ -150,7 +149,8 @@ nav.append(selectType);
 // prendo l'header dall'htmpl
 const header = document.querySelector("header");
 header.append(nav);
-
+// prendo il container
+const iconContainer = document.querySelector(".icon-container");
 for (let i in faIcons) {
-	header.append(getIconCard(faIcons[i]));
+	iconContainer.append(getIconCard(faIcons[i]));
 }

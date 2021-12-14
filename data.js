@@ -176,29 +176,44 @@ for (i in typeArray) {
 	const optionValue = document.createElement("option");
 	optionValue.value = typeArray[i];
 	optionValue.append(typeArray[i]);
-	if(optionValue.value != "All") {	
-		optionValue.addEventListener("click",
-			function () {
-				iconContainer.innerHTML = "";
-				randColorForKey (faIcons, "type", "color");
-				const foundIcons = faIcons.filter((element) => {return this.value == element.type});
-				for (let i in foundIcons) {
-					iconContainer.append(getIconCard(foundIcons[i]));
-				}
-			}
-		);
-	} else {
-		optionValue.addEventListener("click", 
-			function () {
-				iconContainer.innerHTML = "";
-				for(let i in faIcons) {
-					iconContainer.append(getIconCard(faIcons[i]));
-				}
-			}
-		);
-	}
+	// avevo messo l'addEventListener sulle option, su FF funziona :(
+	// if(optionValue.value != "All") {	
+	// 	optionValue.addEventListener("click",
+	// 		function () {
+	// 			iconContainer.innerHTML = "";
+	// 			randColorForKey (faIcons, "type", "color");
+	// 			const foundIcons = faIcons.filter((element) => {return this.value == element.type});
+	// 			for (let i in foundIcons) {
+	// 				iconContainer.append(getIconCard(foundIcons[i]));
+	// 			}
+	// 		}
+	// 	);
+	// } else {
+	// 	optionValue.addEventListener("click", 
+	// 		function () {
+	// 			iconContainer.innerHTML = "";
+	// 			for(let i in faIcons) {
+	// 				iconContainer.append(getIconCard(faIcons[i]));
+	// 			}
+	// 		}
+	// 	);
+	// }
 	selectType.append(optionValue);
+	
 }
+selectType.addEventListener("change", 
+	function () {
+		if(selectType.value != "All") {	
+			iconContainer.innerHTML = "";
+			randColorForKey (faIcons, "type", "color");
+			const foundIcons = faIcons.filter((element) => {return this.value == element.type});
+			foundIcons.forEach((element) => {iconContainer.append(getIconCard(element));});
+		} else {
+			iconContainer.innerHTML = "";
+			faIcons.forEach((element) => {iconContainer.append(getIconCard(element));});
+		}
+	}
+);
 nav.append(selectType);
 // prendo l'header dall'htmpl
 const header = document.querySelector("header");

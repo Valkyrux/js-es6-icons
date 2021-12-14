@@ -199,7 +199,6 @@ for (i in typeArray) {
 	// 	);
 	// }
 	selectType.append(optionValue);
-	
 }
 selectType.addEventListener("change", 
 	function () {
@@ -215,11 +214,8 @@ selectType.addEventListener("change",
 	}
 );
 nav.append(selectType);
-// prendo l'header dall'htmpl
+// prendo l'header dall'HTML	
 const header = document.querySelector("header");
 header.append(nav);
-// prendo il container
-
-for (let i in faIcons) {
-	iconContainer.append(getIconCard(faIcons[i]));
-}
+// prima stampa sul DOM
+faIcons.forEach((element) =>{iconContainer.append(getIconCard(element))});

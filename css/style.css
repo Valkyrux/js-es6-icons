@@ -58,6 +58,7 @@ html {
     background-color: white;
     border-radius: 5px;
     margin: 20px auto;
+    box-shadow: 1px 1px 1px 1px gray;
 }
 
 .icon-card i {
